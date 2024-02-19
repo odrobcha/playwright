@@ -45,4 +45,26 @@
 
 run `npx playwright test --trace on`
 
+### To create test, that depends on some dependencies
+
+Edit playwright.config.js
+
+import path from "path";
+export const STORAGE_STATE = path.join(__dirname, "playwright/.auth/user.json");
+
+Add new projects
+{
+      name: 'setup',
+      testMatch :"**/**.setup.js"
+},
+
+{
+      name: 'e2e tests logged in',
+      testMatch :"**/*loggedin.spec.js",
+      dependencies: ['setup'],
+      use: {
+              storageState: STORAGE_STATE
+            }
+    },
+
 
